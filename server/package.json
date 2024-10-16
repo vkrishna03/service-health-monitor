@@ -2,21 +2,28 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "concurrently \"nodemon index.js\" \"node ./utils/mockService1\" \"node ./utils/mockService2\" \"node ./utils/mockService3\" \"nodemon ./utils/cronJobs\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.4",
+    "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.3",
+    "node-cron": "^3.0.3",
     "nodemon": "^3.0.1"
   },
-  "browser":{
-    "crypto":false,
-    "stream":false
+  "browser": {
+    "crypto": false,
+    "stream": false
   }
 }
