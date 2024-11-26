@@ -4,7 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import serviceRoutes from "./routes/service.routes.js";
-import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 // connect to database
@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Define Routes
 app.use("/api/service", serviceRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/user", authRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 1337;
