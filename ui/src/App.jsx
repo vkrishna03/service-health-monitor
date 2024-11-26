@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import ServicesPage from './pages/ServicesPage'
 
 function App() {
 
@@ -7,9 +9,12 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/hello" element={<h1>Hello World</h1>} />
+          <Route element={<Layout/>}>
+            <Route path="/" element={<ServicesPage/>} />
+            <Route path="*" element={<h1>404 Error</h1>} />
+          </Route>
+          
 
-          <Route path="*" element={<h1>404 Error</h1>} />
         </Routes>
       </Router>
     </>
