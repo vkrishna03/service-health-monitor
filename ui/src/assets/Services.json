@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Service 1",
+        "url": "localhost:8081",
+        "status": "UP",
+        "uptime": 82,
+        "lastChecked": "2021-01-01T00:00:00.000Z"
+    },
+    {
+        "id": 2,
+        "name": "Service 2",
+        "url": "localhost:8082",
+        "status": "DOWN",
+        "uptime": 0,
+        "lastChecked": "2021-01-01T00:00:00.000Z"
+    },
+    {
+        "id": 3,
+        "name": "Service 3",
+        "url": "localhost:8083",
+        "status": "UP",
+        "uptime": 100,
+        "lastChecked": "2021-01-01T00:00:00.000Z"
+    }
+]
