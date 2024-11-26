@@ -2,6 +2,7 @@ import axios from "axios";
 import ServiceStatus from "../models/serviceStatus.model.js";
 import UptimeLog from "../models/uptimeLog.model.js";
 import Service from "../models/service.model.js";
+import Incident from "../models/incident.model.js";
 
 const checkServices = async () => {
   console.log("Fetching services...");
@@ -59,6 +60,20 @@ const checkServices = async () => {
       );
 
       console.log(`Uptime log updated for service: ${service.url}, Uptime percentage: ${uptimePercentage}%`);
+
+      // Resolve any open incidents for this service
+      await Incident.updateMany(
+        { service_id: service._id, status: { $ne: "Resolved" } },
+        {
+          $set: {
+            status: "Resolved",
+            end_time: new Date(),
+            duration: uptimeLog?.downtime_duration || 0,
+          },
+        }
+      );
+
+      console.log(`Incidents resolved for service: ${service.url}`);
     } catch (error) {
       console.error(`Error checking service ${service.url}:`, error.message);
 
@@ -96,6 +111,36 @@ const checkServices = async () => {
       );
 
       console.log(`Downtime log updated for service: ${service.url}, Uptime percentage: ${uptimePercentage}%`);
+
+      // Determine incident type and severity
+      let incidentType = "Outage";
+      let priority = "Medium";
+
+      if (uptimePercentage < 80) {
+        incidentType = "Performance Degradation";
+        priority = uptimePercentage < 65 ? "High" : "Medium";
+      } else {
+        priority = uptimeLog?.downtime_duration > 10 ? "High" : "Medium"; // Example threshold
+      }
+
+      // Create or update an incident for the downtime
+      await Incident.updateOne(
+        { service_id: service._id, status: { $ne: "Resolved" } },
+        {
+          $set: {
+            status: "In Progress",
+            incident_type: incidentType,
+            description: `Service ${service.url} is experiencing ${incidentType.toLowerCase()}.`,
+            priority: priority,
+          },
+          $setOnInsert: {
+            start_time: new Date(),
+          },
+        },
+        { upsert: true }
+      );
+
+      console.log(`Incident created/updated for service: ${service.url}`);
     }
   }
 };
