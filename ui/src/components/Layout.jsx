@@ -24,7 +24,7 @@ const Layout = () => {
 
                 {/* Header Nav */}
                 <div className='w-full h-full flex items-center justify-center'>
-                    <nav className='flex gap-5 mx-auto pr-36'>
+                    <nav className='flex gap-8 mx-auto pr-36'>
                         <a href="/" className={`${path === "/" ? "font-semibold": "font-normal"}`}>Services</a>
                         <a href="/incidents" className={`${path === "/incidents" ? "font-semibold": "font-normal"}`}>Incidents</a>
                         <a href="/logs" className={`${path === "/logs" ? "font-semibold": "font-normal"}`}>Uptime Logs</a>
