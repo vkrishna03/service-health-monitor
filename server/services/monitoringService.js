@@ -54,6 +54,7 @@ const checkServices = async () => {
           },
           $set: {
             uptime_percentage: uptimePercentage,
+            current_downtime_streak: 0, // Reset current downtime streak
           },
         },
         { upsert: true }
@@ -93,18 +94,25 @@ const checkServices = async () => {
       const upChecks = uptimeLog?.up_checks || 0;
       const uptimePercentage = (upChecks / totalChecks) * 100;
 
+      // Calculate the actual downtime duration
+      const lastCheckedAt = uptimeLog?.last_checked_at || new Date();
+      const currentCheckedAt = new Date();
+      const downtimeDuration = (currentCheckedAt - lastCheckedAt) / 1000 / 60; // Convert milliseconds to minutes
+
       // Update downtime logs
       await UptimeLog.updateOne(
         { service_id: service._id },
         {
           $inc: {
-            downtime: 6000, // Assume 1 minute of downtime for simplicity
+            downtime: downtimeDuration, // Increment downtime by the actual duration
             total_checks: 1,
             down_checks: 1,
-            downtime_duration: 1, // Increment downtime duration by 1 minute
+            downtime_duration: downtimeDuration, // Increment downtime duration by the actual duration
+            current_downtime_streak: downtimeDuration, // Increment current downtime streak by the actual duration
           },
           $set: {
             uptime_percentage: uptimePercentage,
+            last_checked_at: currentCheckedAt, // Update the last checked time
           },
         },
         { upsert: true }
@@ -120,7 +128,7 @@ const checkServices = async () => {
         incidentType = "Performance Degradation";
         priority = uptimePercentage < 65 ? "High" : "Medium";
       } else {
-        priority = uptimeLog?.downtime_duration > 10 ? "High" : "Medium"; // Example threshold
+        priority = uptimeLog?.current_downtime_streak > 10 ? "High" : "Medium"; // Example threshold
       }
 
       // Create or update an incident for the downtime

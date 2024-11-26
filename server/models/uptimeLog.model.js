@@ -12,6 +12,8 @@ const uptimeLogSchema = new mongoose.Schema({
   total_checks: { type: Number },
   up_checks: { type: Number },
   down_checks: { type: Number },
+  current_downtime_streak: { type: Number, default: 0 }, // in minutes
+  last_checked_at: { type: Date, default: Date.now }, // Store the last checked time
 });
 
 const UptimeLog = mongoose.model("UptimeLog", uptimeLogSchema);

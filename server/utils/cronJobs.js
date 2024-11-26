@@ -23,7 +23,7 @@ connectDB();
 console.log("Starting cron job script...");
 
 // Schedule a check every minute "* * * * *" or every 20 seconds "*/20 * * * * *"
-cron.schedule("*/20 * * * * *", () => {
+cron.schedule("*/10 * * * * *", () => {
   console.log("Running service checks...");
   checkServices();
 });
