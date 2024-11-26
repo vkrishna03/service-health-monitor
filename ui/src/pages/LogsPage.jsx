@@ -29,7 +29,7 @@ const LogsPage = () => {
 
     return (
       <div className='rounded-md shadow-md py-8 px-10 h-full'>
-          <h1 className='text-2xl font-semibold'>Incidents</h1>
+          <h1 className='text-2xl font-semibold'>Uptime Logs</h1>
           
           
           <div className='w-full px-4 py-10'>

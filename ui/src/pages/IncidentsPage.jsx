@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Table} from '../components/Table'
 // import rows from "../assets/Incidents.json"
 import { fetchIncidents } from '../api/services'
 import useFetchData from '../hooks/useFetchData'
+import Button from '../components/Button'
 
 const IncidentsPage = () => {
+
+    const [filter, setFilter] = useState("All");
 
     const {data: incidents, loading, error} = useFetchData(fetchIncidents);
 
@@ -20,6 +23,8 @@ const IncidentsPage = () => {
         type: incident.type
     }));
 
+    const filteredRows = filter === "All" ? rows : rows.filter(row => row.status === filter);
+
     if (loading) {
         return <div>Loading...</div>;
     };
@@ -33,6 +38,22 @@ const IncidentsPage = () => {
           <h1 className='text-2xl font-semibold'>Incidents</h1>
           
           <div className='w-full px-4 py-10'>
+
+            <div className='flex items-center justify-start mb-4 gap-5'>
+                {
+                    ["All", "Resolved", "In Progress"].map((item, index) => (
+                        <Button 
+                            key={index} 
+                            variant={filter == item ? "primary" : "gray"} 
+                            size='small' 
+                            className={"px-4"} 
+                            onClick={() => setFilter(item)}
+                        >
+                            {item}
+                        </Button>
+                ))}
+            </div>
+
               <Table>
                   <Table.Header>
                       {columns.map((column, index) => (
@@ -42,7 +63,7 @@ const IncidentsPage = () => {
                       ))}
                   </Table.Header>
                   <Table.Body>
-                      {rows.map((row, index) => (
+                      {filteredRows.map((row, index) => (
                           <React.Fragment key={index}>
                               <Table.Row>
                                   <Table.Cell>{index + 1}</Table.Cell>
