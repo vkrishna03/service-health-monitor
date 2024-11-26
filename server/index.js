@@ -5,6 +5,8 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import serviceRoutes from "./routes/service.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import incidentRoutes from "./routes/incident.routes.js";
+import logRoutes from "./routes/log.routes.js";
 
 const app = express();
 // connect to database
@@ -16,8 +18,9 @@ app.use(cors());
 app.use(express.json());
 
 // Define Routes
-app.use("/api/service", serviceRoutes);
-app.use("/api/user", authRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/incidents", incidentRoutes)
+app.use("/api/logs", logRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 1337;

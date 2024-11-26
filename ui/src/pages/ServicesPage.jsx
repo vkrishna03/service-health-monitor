@@ -1,10 +1,29 @@
 import React from 'react'
 import { Table } from '../components/Table'
-import rows from "../assets/Services.json"
+// import rows from "../assets/Services.json"
+import useFetchData from '../hooks/useFetchData'
+import { fetchServices } from '../api/services'
 
 const ServicesPage = () => {
 
-    const columns = ["No", "Service Name", "Status", "Uptime", "Url", "Last Checked"];
+    const {data: services, loading, error} = useFetchData(fetchServices);
+
+    const columns = ["No", "Service Name", "Status", "Uptime", "Url", "Created At"];
+    const rows = services.map(service => ({
+        name: service.name,
+        status: service.status,
+        uptime: service.uptime,
+        url: service.url,
+        lastChecked: service.lastChecked
+    }));
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
   return (
     <div className='rounded-md shadow-md py-8 px-10 h-full'>

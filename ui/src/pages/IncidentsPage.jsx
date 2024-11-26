@@ -1,15 +1,59 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Table} from '../components/Table'
-import rows from "../assets/Incidents.json"
+// import rows from "../assets/Incidents.json"
+import { fetchIncidents } from '../api/services'
+import useFetchData from '../hooks/useFetchData'
+import Button from '../components/Button'
 
 const IncidentsPage = () => {
+
+    const [filter, setFilter] = useState("All");
+
+    const {data: incidents, loading, error} = useFetchData(fetchIncidents);
+
     const columns = ["No", "Service Name", "Status", "Type", "Priority", "Start Time", "End Time", "Duration"];
+    const rows = incidents.map(incident => ({
+        serviceName: incident.serviceName,
+        status: incident.status,
+        incidentType: incident.incidentType,
+        priority: incident.priority,
+        startTime: new Date(incident.startTime).toLocaleString(),
+        endTime: incident.endTime ? new Date(incident.endTime).toLocaleString() : "-",
+        duration: incident.duration,
+        type: incident.type
+    }));
+
+    const filteredRows = filter === "All" ? rows : rows.filter(row => row.status === filter);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    };
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    };
 
     return (
       <div className='rounded-md shadow-md py-8 px-10 h-full'>
           <h1 className='text-2xl font-semibold'>Incidents</h1>
           
           <div className='w-full px-4 py-10'>
+
+            <div className='flex items-center justify-start mb-4 gap-5'>
+                {
+                    ["All", "Resolved", "In Progress"].map((item, index) => (
+                        <Button 
+                            key={index} 
+                            variant={filter == item ? "primary" : "gray"} 
+                            size='small' 
+                            className={"px-4"} 
+                            onClick={() => setFilter(item)}
+                        >
+                            {item}
+                        </Button>
+                ))}
+            </div>
+
               <Table>
                   <Table.Header>
                       {columns.map((column, index) => (
@@ -19,7 +63,7 @@ const IncidentsPage = () => {
                       ))}
                   </Table.Header>
                   <Table.Body>
-                      {rows.map((row, index) => (
+                      {filteredRows.map((row, index) => (
                           <React.Fragment key={index}>
                               <Table.Row>
                                   <Table.Cell>{index + 1}</Table.Cell>
@@ -35,7 +79,7 @@ const IncidentsPage = () => {
                                           {row.status}
                                       </span>
                                   </Table.Cell>
-                                    <Table.Cell>{row.incidentType}</Table.Cell>
+                                    <Table.Cell>{row.type}</Table.Cell>
                                     <Table.Cell>{row.priority}</Table.Cell>
                                     <Table.Cell>{row.startTime}</Table.Cell>
                                     <Table.Cell>{row.endTime}</Table.Cell>

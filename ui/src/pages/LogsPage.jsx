@@ -1,21 +1,43 @@
 import React from 'react'
 import {Table} from '../components/Table'
-import rows from "../assets/Logs.json"
+// import rows from "../assets/Logs.json"
+import { fetchLogs } from '../api/services'
+import useFetchData from '../hooks/useFetchData'
 
 const LogsPage = () => {
+
+    const {data: logs, loading, error} = useFetchData(fetchLogs);
+
     const columns = ["No", "Service Name", "Uptime Percentage", "Downtime (in min)"];
+    const rows = logs.map(log => ({
+        name: log.serviceName,
+        uptime_percentage: log.uptimePercentage,
+        downtime_duration: log.downtime
+    }));
+
+    const totalChecks = 1000;
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+
 
     return (
       <div className='rounded-md shadow-md py-8 px-10 h-full'>
-          <h1 className='text-2xl font-semibold'>Incidents</h1>
+          <h1 className='text-2xl font-semibold'>Uptime Logs</h1>
           
           
           <div className='w-full px-4 py-10'>
-                <div className='flex items-center justify-end mb-4'>
+                {/* <div className='flex items-center justify-end mb-4'>
                 <span>Total Checks:{"   "} 1000</span>    
                 </div>
                 
-                
+                 */}
               <Table>
                   <Table.Header>
                       {columns.map((column, index) => (
