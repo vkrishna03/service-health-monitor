@@ -1,9 +1,32 @@
 import React from 'react'
 import {Table} from '../components/Table'
-import rows from "../assets/Incidents.json"
+// import rows from "../assets/Incidents.json"
+import { fetchIncidents } from '../api/services'
+import useFetchData from '../hooks/useFetchData'
 
 const IncidentsPage = () => {
+
+    const {data: incidents, loading, error} = useFetchData(fetchIncidents);
+
     const columns = ["No", "Service Name", "Status", "Type", "Priority", "Start Time", "End Time", "Duration"];
+    const rows = incidents.map(incident => ({
+        serviceName: incident.serviceName,
+        status: incident.status,
+        incidentType: incident.incidentType,
+        priority: incident.priority,
+        startTime: new Date(incident.startTime).toLocaleString(),
+        endTime: incident.endTime ? new Date(incident.endTime).toLocaleString() : "-",
+        duration: incident.duration,
+        type: incident.type
+    }));
+
+    if (loading) {
+        return <div>Loading...</div>;
+    };
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    };
 
     return (
       <div className='rounded-md shadow-md py-8 px-10 h-full'>
@@ -35,7 +58,7 @@ const IncidentsPage = () => {
                                           {row.status}
                                       </span>
                                   </Table.Cell>
-                                    <Table.Cell>{row.incidentType}</Table.Cell>
+                                    <Table.Cell>{row.type}</Table.Cell>
                                     <Table.Cell>{row.priority}</Table.Cell>
                                     <Table.Cell>{row.startTime}</Table.Cell>
                                     <Table.Cell>{row.endTime}</Table.Cell>

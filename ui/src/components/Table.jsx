@@ -31,7 +31,7 @@ ColumnTitle.propTypes = {
 };
 
 const Body = ({ children }) => (
-  <tbody className="divide-subtle divide-y rounded-md">{children}</tbody>
+  <tbody className="divide-subtle divide-y rounded-md overflow-y-scroll">{children}</tbody>
 );
 
 Body.propTypes = {
