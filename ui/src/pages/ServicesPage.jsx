@@ -4,7 +4,7 @@ import rows from "../assets/Services.json"
 
 const ServicesPage = () => {
 
-    const columns = ["No", "Service Name", "Status", "Uptime", "Last Checked"];
+    const columns = ["No", "Service Name", "Status", "Uptime", "Url", "Last Checked"];
 
   return (
     <div className='rounded-md shadow-md py-8 px-10 h-full'>
@@ -37,7 +37,11 @@ const ServicesPage = () => {
                                     </span>
                                 </Table.Cell>
                                 <Table.Cell>{row.uptime}</Table.Cell>
+                                <Table.Cell>
+                                    <a href={row.url}>{row.url}</a>
+                                </Table.Cell>
                                 <Table.Cell>{row.lastChecked}</Table.Cell>
+
                             </Table.Row>
                         </React.Fragment>
                     ))}
