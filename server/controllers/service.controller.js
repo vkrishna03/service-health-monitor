@@ -24,7 +24,7 @@ export const createService = async (req, res) => {
 
 export const getAllServices = async (req, res) => {
   try {
-    const services = await Service.find({ user: req.user._id });
+    const services = await Service.find({});
     const servicesWithMetrics = await Promise.all(
       services.map(async (service) => {
         const uptimeLog = await UptimeLog.findOne({ service_id: service._id });
@@ -32,17 +32,14 @@ export const getAllServices = async (req, res) => {
           service_id: service._id,
         }).sort({ checked_at: -1 });
         return {
-          serviceName: service.name,
+          name: service.name,
           status: latestStatus?.status || "UNKNOWN",
-          uptimePercentage: uptimeLog?.uptime_percentage || 0,
-          averageResponseTime: uptimeLog.total_checks
-            ? uptimeLog.up_checks / uptimeLog.total_checks
-            : 0,
-          lastchecked: latestStatus?.checked_at || "UNKNOWN",
+          uptime: uptimeLog?.uptime_percentage || 0,
+          url: service.url,
+          lastChecked: latestStatus?.checked_at || "UNKNOWN",
         };
       })
     );
-
     res.json(servicesWithMetrics);
   } catch (err) {
     res.status(500).json({ error: err.message });

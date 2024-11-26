@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.post("/", getAllServices);
+router.get("/", getAllServices);
 router.get("/:serviceId", getServiceDetails);
 router.get("/:serviceId/statusHistory", getServiceStatusHistory);
 router.get("/:serviceId/incidents", getRelatedIncidents);
