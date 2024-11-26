@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "serviceName": "Service 1",
+        "incidentType": "Outage",
+        "description": "Service 1 is down",
+        "startTime": "2021-01-01T00:00:00.000Z",
+        "endTime": "2021-01-01T00:00:00.000Z",
+        "status": "Resolved",
+        "priority": "High",
+        "duration": 0
+    },
+    {
+        "id": 2,
+        "serviceName": "Service 2",
+        "incidentType": "Performance Degradation",
+        "description": "Service 2 is down",
+        "startTime": "2021-01-01T00:00:00.000Z",
+        "endTime": "2021-01-01T00:00:00.000Z",
+        "status": "Open",
+        "priority": "High",
+        "duration": 0
+    },
+    {
+        "id": 3,
+        "serviceName": "Service 3",
+        "incidentType": "Outage",
+        "description": "Service 3 is down",
+        "startTime": "2021-01-01T00:00:00.000Z",
+        "endTime": "2021-01-01T00:00:00.000Z",
+        "status": "In Progress",
+        "priority": "Medium",
+        "duration": 0
+    }
+]

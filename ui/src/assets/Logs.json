@@ -1,0 +1,92 @@
+[
+    {
+      "name": "service 1",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 99.9,
+      "downtime_duration": 10,
+      "total_checks": 1000,
+      "up_checks": 999,
+      "down_checks": 1
+    },
+    {
+      "name": "service 2",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 98.5,
+      "downtime_duration": 30,
+      "total_checks": 1000,
+      "up_checks": 985,
+      "down_checks": 15
+    },
+    {
+      "name": "service 3",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 97.0,
+      "downtime_duration": 60,
+      "total_checks": 1000,
+      "up_checks": 970,
+      "down_checks": 30
+    },
+    {
+      "name": "service 1",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 95.0,
+      "downtime_duration": 90,
+      "total_checks": 1000,
+      "up_checks": 950,
+      "down_checks": 50
+    },
+    {
+      "name": "service 2",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 99.0,
+      "downtime_duration": 20,
+      "total_checks": 1000,
+      "up_checks": 990,
+      "down_checks": 10
+    },
+    {
+      "name": "service 3",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 96.5,
+      "downtime_duration": 70,
+      "total_checks": 1000,
+      "up_checks": 965,
+      "down_checks": 35
+    },
+    {
+      "name": "service 1",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 94.0,
+      "downtime_duration": 120,
+      "total_checks": 1000,
+      "up_checks": 940,
+      "down_checks": 60
+    },
+    {
+      "name": "service 2",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 92.5,
+      "downtime_duration": 150,
+      "total_checks": 1000,
+      "up_checks": 925,
+      "down_checks": 75
+    },
+    {
+      "name": "service 3",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 91.0,
+      "downtime_duration": 180,
+      "total_checks": 1000,
+      "up_checks": 910,
+      "down_checks": 90
+    },
+    {
+      "name": "service 1",
+      "date": "2023-10-01T12:00:00Z",
+      "uptime_percentage": 90.0,
+      "downtime_duration": 200,
+      "total_checks": 1000,
+      "up_checks": 900,
+      "down_checks": 100
+    }
+]
